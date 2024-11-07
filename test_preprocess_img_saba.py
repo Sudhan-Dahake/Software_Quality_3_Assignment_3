@@ -6,7 +6,6 @@ This test case ensures that the preprocess_img correctly processes the images pa
 before passing the image to the model
 """
 
-import numpy as np
 from model import preprocess_img
 from test_helpers import assert_processed_image_correct  # Import the helper function
 
