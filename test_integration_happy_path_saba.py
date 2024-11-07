@@ -2,23 +2,29 @@
 This file includes the happy path integration tests for the model.py functions
 """
 
-
-import numpy as np
 import unittest
 from unittest.mock import patch
+import numpy as np
 from model import preprocess_img, predict_result
+
+
+"""
+This class contains the test case for the happy path integration testing
+"""
 
 
 class TestModelIntegration(unittest.TestCase):
 
-    # Mocking the predict method of the keras model (mot to be confused wiht predict_result())
-    # the predict_result will use a mocked model.predict insteas of loading the real model
+    # Mocking the predict method of the keras model
+    # the predict_result will use a mocked model.predict
+    # instead of loading the real model
     @patch("model.model.predict")
     # the mock object is passed as an argument
     def test_integration_image_label_prediction_true(self, mock_predict):
         """
-        This is an integration test between the preprocess_img(img_path) function and predict_result(predict) function. 
-        The predict_result funciton receives the processed image returned from the preprocess_img function.
+        This is an integration test between the preprocess_img(img_path) function 
+        and predict_result(predict) function. The predict_result funciton receives
+        the processed image returned from the preprocess_img function.
 
         A mock is used to simulate the model's predict function.
         """
@@ -28,7 +34,8 @@ class TestModelIntegration(unittest.TestCase):
         img_path = "preprocess_img_test.jpeg"
 
         # Setting up the mock predict function to return a controlled prediction
-        # this array matches what a real predict method would return (a 2D array of probabilities for each class)
+        # this array matches what a real predict method would
+        # return (a 2D array of probabilities for each class)
         # The output is set so that class 3 will have the highest probability (0.65)
         mock_predict.return_value = np.array([[0.1, 0.2, 0.05, 0.65]])
 
