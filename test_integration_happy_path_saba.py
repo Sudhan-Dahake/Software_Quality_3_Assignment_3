@@ -6,14 +6,14 @@ import unittest
 from unittest.mock import patch
 import numpy as np
 from model import preprocess_img, predict_result
-
-
-"""
-This class contains the test case for the happy path integration testing
-"""
+from test_helpers import assert_processed_image_correct  # Import the helper function
 
 
 class TestModelIntegration(unittest.TestCase):
+
+    """
+    This class contains the test case for the happy path integration testing
+    """
 
     # Mocking the predict method of the keras model
     # the predict_result will use a mocked model.predict
@@ -52,17 +52,8 @@ class TestModelIntegration(unittest.TestCase):
 
         # ******* Assert *******
 
-        # Checking the shape of the processed image
-        assert processed_image.shape == (
-            1, 224, 224, 3), "Shape of processed image is incorrect"
-
-        # Checking that the pixel values are in the range [0, 1]
-        assert np.all(processed_image >= 0.0) and np.all(
-            processed_image <= 1.0), "Out of range pixel values"
-
-        # Checking that the output image is of type float32
-        assert processed_image.dtype == np.float32, "Processed image dtype is incorrect"
-
+        assert_processed_image_correct(
+            processed_image)  # Using the helper function
         # Checking that the mock predict method was called once with the processed image
         mock_predict.assert_called_once_with(processed_image)
 
