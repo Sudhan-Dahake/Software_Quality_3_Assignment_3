@@ -7,7 +7,7 @@ before passing the image to the model
 """
 
 from model import preprocess_img
-from test_helpers import assert_processed_image_correct  # Import the helper function
+from test.test_helpers import assert_processed_image_correct  # Import the helper function
 
 
 def test_preprocess_img():
