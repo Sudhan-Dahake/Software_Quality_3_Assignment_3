@@ -49,7 +49,7 @@ class TestIntegrationSadPath(unittest.TestCase):
         try:
             predict_result(invalid_shape_img)
             self.fail("Expected an exception due to invalid input shape, but none was raised.")
-        except Exception as e:
+        except ValueError as e:
             # Check that the error message mentions shape incompatibility
             self.assertIn("convolution input must be 4-dimensional", str(e))
 
