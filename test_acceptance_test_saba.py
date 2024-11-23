@@ -16,7 +16,7 @@ from app import app
 
 
 @pytest.fixture
-def client():
+def flask_client():
     """
     Adding a Flask test client for simulating requests to the Flask application
     without having to manually run the server
@@ -25,7 +25,7 @@ def client():
         yield client
 
 
-def test_html_file_as_image(client):
+def test_html_file_as_image(flask_client):
     """
     This test handles the result of an HTML file uploaded as an image
     Ensures that the application is able to successfuly identify it as invalid
@@ -39,7 +39,7 @@ def test_html_file_as_image(client):
         # Act
         # Posting the HTML file to the corresponding endpoint (/prediction)
 
-        response = client.post(
+        response = flask_client.post(
             '/prediction', data={'file': html_file}, content_type='multipart/form-data')
 
     # Assert
