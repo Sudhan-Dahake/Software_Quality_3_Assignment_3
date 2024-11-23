@@ -1,0 +1,12 @@
+# Include all Python files in the project
+include *.py
+
+# Include everything inside static, templates, and test_images folders
+recursive-include static *
+recursive-include templates *
+recursive-include test_images *
+
+# Include any other non-Python files
+include *.txt
+include *.md
+include *.html
