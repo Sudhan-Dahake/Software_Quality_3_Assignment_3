@@ -22,7 +22,7 @@ class TestModelIntegration(unittest.TestCase):
     # the mock object is passed as an argument
     def test_integration_image_label_prediction_true(self, mock_predict):
         """
-        This is an integration test between the preprocess_img(img_path) function 
+        This is an integration test between the preprocess_img(img_path) function
         and predict_result(predict) function. The predict_result funciton receives
         the processed image returned from the preprocess_img function.
 
@@ -58,7 +58,7 @@ class TestModelIntegration(unittest.TestCase):
         mock_predict.assert_called_once_with(processed_image)
 
         # Checking if the predicted class is as expected
-        assert predicted_class == 1, f"Expected 3, but got {predicted_class}"
+        assert predicted_class == 3, f"Expected 3, but got {predicted_class}"
         # assert predicted_class == 3, f"Expected 3, but got {predicted_class}"
 
 
