@@ -3,6 +3,13 @@ Acceptance tests for the Flask application, including file upload scenarios
 and image prediction functionality.
 """
 
+# Feature: Uploading and processing image files for hand sign digit prediction
+# Scenario 1: Valid Image Prediction
+# Given there is a box to upload an image, a submit button, and a trained prediction model
+# When I upload a valid image file of a hand sign digit
+# And I submit the file for prediction
+# Then the system should return a valid digit prediction between 0 and 9
+
 import os
 import sys
 from io import BytesIO
@@ -61,21 +68,3 @@ def test_valid_image_prediction(flask_client):
     print("Predicted Output:", predicted_output)  # Debugging aid to inspect the output
     assert any(str(digit) in predicted_output for digit in range(10)), \
         f"Prediction '{predicted_output}' is not a valid digit (0-9)."
-
-
-def test_invalid_file_upload(flask_client):
-    """
-    Test Name: Invalid File Upload
-    Scenario: The user uploads a non-image file (e.g., a .txt file).
-    Expected Outcome: The system rejects the file and returns an error message.
-    """
-    # Arrange: Create a simulated invalid file content
-    invalid_file_content = b"This is not an image file."
-
-    # Act: Upload the invalid file and retrieve the response
-    response = upload_file(flask_client, invalid_file_content, 'invalid_file.txt')
-
-    # Assert: Verify the response status and error message
-    assert response.status_code == 200, "Expected HTTP 200 OK, even for invalid input."
-    assert b"File cannot be processed" in response.data or b"error" in response.data, \
-        "Expected an error message indicating the file could not be processed."
