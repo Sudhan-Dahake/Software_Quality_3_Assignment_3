@@ -59,7 +59,6 @@ class TestModelIntegration(unittest.TestCase):
 
         # Checking if the predicted class is as expected
         assert predicted_class == 3, f"Expected 3, but got {predicted_class}"
-        # assert predicted_class == 3, f"Expected 3, but got {predicted_class}"
 
 
 if __name__ == "__main__":
