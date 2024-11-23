@@ -39,7 +39,7 @@ jobs:
     - name: List contents of dist  # Debug step to list contents of the dist folder
       run: ls -l dist
     - name: Archive package
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Hand-digit-Recognition
         path: dist
@@ -52,10 +52,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: List contents  # Debug step to list contents of the dist folder
-        run: ls -l
+      - name: Download artifact (Hand-digit-Recognition)
+        uses: actions/download-artifact@v4
+        with:
+          name: Hand-digit-Recognition
 
       - name: Install package from artifact
         run: |
-          cd dist
           pip install *.whl
+
+
