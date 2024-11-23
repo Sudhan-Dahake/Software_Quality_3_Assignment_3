@@ -1,0 +1,45 @@
+# GitHub CI build pipeline
+name: Hand digit Recognition CI build
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+    branches:
+      - master
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if  [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Run Unit Tests and generate coverage report
+      run: |
+        pytest -n 1 -v
+        pytest -n 1 --cov=. --cov-report=term --cov-report=html
+    - name: Archive code coverage html report
+      uses: actions/upload-artifact@v3
+      with:
+        name: code-coverage-report
+        path: htmlcov
+    - name: Run package creation
+      run: |
+        python -m pip install --user --upgrade build
+        python -m build
+    - name: Archive package
+      uses: actions/upload-artifact@v3
+      with:
+        name: Hand-digit-Recognition
+        path: dist
+
+
