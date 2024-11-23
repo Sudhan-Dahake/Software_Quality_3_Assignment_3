@@ -17,34 +17,33 @@ from app import app
 
 @pytest.fixture
 def client():
+    """
+    Adding a Flask test client for simulating requests to the Flask application
+    without having to manually run the server
+    """
     with app.test_client() as client:
         yield client
 
 
-class TestInvalidFileUpload():
+def test_html_file_as_image(client):
     """
-    This class contains acceptance test cases for handling invalid file upload
+    This test handles the result of an HTML file uploaded as an image
+    Ensures that the application is able to successfuly identify it as invalid
+    and return the correct error message
     """
 
-    def test_html_file_as_image(self, client):
-        """
-        This test handles the result of an HTML file uploaded as an image
-        Ensures that the application is able to successfuly identify it as invalid
-        and return the correct error message
-        """
+    # Arrange
+    # Opening the HTML file from the current directory
 
-        # Arrange
-        # Opening the HTML file from the current directory
+    with open("InvalidFile.html", "rb") as html_file:
+        # Act
+        # Posting the HTML file to the corresponding endpoint (/prediction)
 
-        with open("InvalidFile.html", "rb") as html_file:
-            # Act
-            # Posting the HTML file to the corresponding endpoint (/prediction)
+        response = client.post(
+            '/prediction', data={'file': html_file}, content_type='multipart/form-data')
 
-            response = client.post(
-                '/prediction', data={'file': html_file}, content_type='multipart/form-data')
-
-        # Assert
-        # Ensures that the request goes through and the server processes the request
-        assert response.status_code == 200
-        # Validate the error message
-        assert b"The file data was invalid or in an unexpected format." in response.data
+    # Assert
+    # Ensures that the request goes through and the server processes the request
+    assert response.status_code == 200
+    # Validate the error message
+    assert b"The file data was invalid or in an unexpected format." in response.data
