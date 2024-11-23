@@ -1,0 +1,26 @@
+name: Install Python Package
+
+on:
+  workflow_run:
+    workflows: ["Hand digit Recognition CI build"]      # Name of the first workflow
+    types:
+      - completed       # Triggers when the first workflow completes
+
+jobs:
+  install-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download artifact (awesome-calculator)
+        uses: actions/download-artifact@v4                  # Using v4 because v3 and prior doesn't support sharing artifacts among workflows.
+        with:
+          name: Hand-digit-Recognition
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Python package from .whl file
+        run: |
+          cd /home/runner/work/Software_Quality_3_Assignment_3/Software_Quality_3_Assignment_3      # Path of where the artifact is downloaded.
+          pip install *.whl       # Install the .whl file from the downloaded artifact
