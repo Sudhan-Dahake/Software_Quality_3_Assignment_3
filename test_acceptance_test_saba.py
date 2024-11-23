@@ -25,6 +25,7 @@ def flask_client():
         yield client
 
 
+@pytest.mark.usefixtures("flask_client")
 def test_html_file_as_image(flask_client):
     """
     This test handles the result of an HTML file uploaded as an image
