@@ -25,8 +25,8 @@ jobs:
         if  [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run Unit Tests and generate coverage report
       run: |
-        pytest -n 1 -v
-        pytest -n 1 --cov=. --cov-report=term --cov-report=html
+        pytest -n 2 -v --dist=loadscope
+        pytest -n 2 --dist=loadscope --cov=. --cov-report=term --cov-report=html
     - name: Archive code coverage html report
       uses: actions/upload-artifact@v3
       with:
