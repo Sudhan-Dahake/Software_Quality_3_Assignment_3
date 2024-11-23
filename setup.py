@@ -1,3 +1,8 @@
+"""
+Setup script for the Hand Digit Recognition project.
+This script uses setuptools to package and distribute the project.
+"""
+
 from setuptools import setup, find_packages
 
 setup(
@@ -5,7 +10,6 @@ setup(
     version='0.1',
     packages=find_packages(
         where='.',
-        # Exclude unwanted directories
         exclude=['static', 'templates', 'test_images'],
     ),
 )
