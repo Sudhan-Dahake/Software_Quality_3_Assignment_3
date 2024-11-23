@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Hand-digit-Recognition
-        path: .
+        path: dist
 
 
   install:
@@ -52,13 +52,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Download artifact (Hand-digit-Recognition)
-        uses: actions/download-artifact@v4
-        with:
-          name: Hand-digit-Recognition
-
       - name: Install package from artifact
         run: |
           pip install *.whl
-
-
