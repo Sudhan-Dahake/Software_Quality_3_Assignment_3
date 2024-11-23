@@ -10,6 +10,9 @@ setup(
     version='0.1',
     packages=find_packages(
         where='.',
-        exclude=['static', 'templates', 'test_images'],
     ),
+    include_package_data=True,
+    package_data={
+        '': ['static/*', 'templates/*', 'test_images/*', '*.py', '*.md', '*.txt', '*.html'],
+    },
 )
