@@ -42,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: Hand-digit-Recognition
-        path: dist
+        path: .
 
 
   install:
