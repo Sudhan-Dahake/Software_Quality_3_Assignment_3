@@ -54,4 +54,5 @@ jobs:
 
       - name: Install package from artifact
         run: |
+          cd dist
           pip install *.whl
