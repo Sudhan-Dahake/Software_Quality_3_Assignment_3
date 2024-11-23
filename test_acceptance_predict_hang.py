@@ -69,3 +69,4 @@ class TestValidImagePrediction:
         print("Predicted Output:", predicted_output)  # Debugging aid to inspect the output
         assert any(str(digit) in predicted_output for digit in range(10)), \
             f"Prediction '{predicted_output}' is not a valid digit (0-9)."
+        
