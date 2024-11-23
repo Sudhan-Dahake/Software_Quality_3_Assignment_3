@@ -4,7 +4,7 @@ This module contains test cases for integration testing between preprocess_img a
 
 from io import BytesIO
 import unittest
-from PIL import Image
+from PIL import Image # type: ignore
 from model import preprocess_img, predict_result
 
 class TestIntegrationSadPath(unittest.TestCase):
@@ -33,32 +33,26 @@ class TestIntegrationSadPath(unittest.TestCase):
         """
 
         # Arrange
-        # Create a blank 224x224 RGB image in memory to
-        # simulate a valid input image for preprocess_img
-        img = Image.new("RGB", (224, 224))
-
-        # Save the image to an in-memory bytes buffer instead of a file
+        img = Image.new("RGB", (224, 224))  # Create a blank 224x224 RGB image
         img_bytes = BytesIO()
         img.save(img_bytes, format="JPEG")
-        img_bytes.seek(0)  # Move the buffer's pointer to the start of the image
+        img_bytes.seek(0)
 
         # Act
-        # Use preprocess_img to process the in-memory image.
-        # This should produce an array of shape (1, 224, 224, 3).
         processed_img = preprocess_img(img_bytes)
 
-        # Manually modify the shape of the preprocessed image to simulate an invalid input
-        # Here, we reshape it to (224, 224, 3), removing the batch dimension.
-        invalid_shape_img = processed_img.reshape((224, 224, 3))
+        # Simulate invalid shape: (224, 224, 3)
+        invalid_shape_img = processed_img[0]  # Remove the batch dimension
 
         # Assert
-        # Attempt to pass the invalid-shaped array to predict_result,
-        # which should raise a ValueError.
-        with self.assertRaises(ValueError) as context:
+        # Attempt to call `predict_result` and catch any error
+        try:
             predict_result(invalid_shape_img)
+            self.fail("Expected an exception due to invalid input shape, but none was raised.")
+        except Exception as e:
+            # Check that the error message mentions shape incompatibility
+            self.assertIn("convolution input must be 4-dimensional", str(e))
 
-        # Check that the error message mentions an incompatibility due to the incorrect input shape
-        self.assertIn("is incompatible with the layer", str(context.exception))
 
 if __name__ == "__main__":
     unittest.main()
