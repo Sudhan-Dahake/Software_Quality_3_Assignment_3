@@ -1,5 +1,5 @@
 # GitHub CI build pipeline
-name: Hand digit Recognition CI build
+name: Hand digit Recognition CI package builder and installer
 
 on:
   push:
