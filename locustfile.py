@@ -2,9 +2,8 @@
 This file includes the code for load testing using locust library
 """
 
-from locust import HttpUser, TaskSet, task, between
-import random
 import os
+from locust import HttpUser, task, between
 
 
 # the image file being used for all requests
