@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN rm rf __pycache__ .github .idea
+RUN rm -rf __pycache__ .github .idea
 
 RUN pip install --no-cache-dir -r requirements.txt
 
