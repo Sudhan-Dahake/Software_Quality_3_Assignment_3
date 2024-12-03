@@ -8,6 +8,7 @@ RUN rm -rf __pycache__ .github .idea
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Exposing a PORT
 EXPOSE 8000
 
 CMD ["flask", "run", "--host=0.0.0.0"]
