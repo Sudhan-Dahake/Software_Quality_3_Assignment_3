@@ -8,7 +8,11 @@ RUN rm -rf __pycache__ .github .idea
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN chmod +x /app/keep_alive.sh
+
+RUN apt-get update && apt-get install -y curl supervisor && apt-get clean
+
 # Exposing a PORT
 EXPOSE 8000
 
-CMD ["flask", "run", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["supervisord", "-c", "/app/supervisord.conf"]
